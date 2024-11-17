@@ -11,27 +11,34 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f9;
+            overflow-y: auto;
         }
 
-      .simulated-status-bar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 20px;
-    background: linear-gradient(270deg, #001f3f, #002147, #003366, #004080, #00509e, #0066cc, #007fff, #00a1e0, #66d9ff, #00a1e0, #007fff, #00509e, #004080);
-    background-size: 1200% 1200%;
-    z-index: 1000;
-    animation: gradientAnimation 10s ease infinite;
-}
+        .simulated-status-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 36px;
+            background: linear-gradient(270deg, #0000ff, #1e90ff, #87cefa, #ff69b4, #ff1493, #ff007f, #0000ff);
+            background-size: 300% 300%;
+            z-index: 1000;
+            animation: waveAnimation 15s linear infinite;
+        }
 
-@keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+        @keyframes waveAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
         header {
-            margin-top: 20px;
+            margin-top: 36px;
             background: linear-gradient(to right, #002147, #00A1E0);
             color: #FFFFFF;
             padding: 20px;
@@ -49,7 +56,7 @@
             width: 100px;
             height: auto;
             display: block;
-            margin: 0 auto 10px;
+            margin: 0 auto 0px;
         }
 
         main {
@@ -110,66 +117,65 @@
             background-color: #00A1E0;
         }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background: rgba(0, 0, 0, 0.7); /* Escurecido para maior contraste */
-    backdrop-filter: blur(5px); /* Adicionado efeito de desfoque */
-    justify-content: center;
-    align-items: center;
-}
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
 
-.modal-content {
-    background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Gradiente sutil para o fundo */
-    padding: 20px;
-    border: none;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    border-radius: 15px; /* Curvas mais suaves */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra para destacar o modal */
-    animation: fadeIn 0.3s ease; /* Suave entrada animada */
-}
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            padding: 20px;
+            border: none;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s ease;
+        }
 
-.modal-content h1, 
-.modal-content p {
-    color: #333; /* Texto em tom escuro para boa legibilidade */
-    font-family: 'Arial', sans-serif; /* Fonte moderna e limpa */
-    text-align: center;
-}
+        .modal-content h1, 
+        .modal-content p {
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
 
-.modal-content button {
-    background: #0066cc; /* Azul vibrante */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
+        .modal-content button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
 
-.modal-content button:hover {
-    background: #005bb5; /* Tom mais escuro no hover */
-}
+        .modal-content button:hover {
+            background: #005bb5;
+        }
 
-/* Animação de entrada */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
         .close {
             color: #aaa;
@@ -328,9 +334,19 @@
             <button class="botao" onclick="fecharModalCompraFinalizada()">OK</button>
         </div>
     </div>
+    
+    <!-- Modal de Resposta de Adição ao Carrinho -->
+    <div id="modalAdicionado" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalAdicionado()">&times;</span>
+            <h2>Produto Adicionado</h2>
+            <p>Você adicionou ao carrinho com sucesso!</p>
+            <button class="botao" onclick="fecharModalAdicionado()">OK</button>
+        </div>
+    </div>
 
     <footer>
-
+        <!-- Insira conteúdo de rodapé aqui -->
     </footer>
 
     <script>
@@ -343,7 +359,11 @@
             let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
             carrinho.push({ nome: produto, imagem: imagemUrl });
             localStorage.setItem('carrinho', JSON.stringify(carrinho));
-            alert(produto + " foi adicionado ao carrinho.");
+            document.getElementById('modalAdicionado').style.display = 'flex'; // Mostra o modal de confirmação
+        }
+
+        function fecharModalAdicionado() {
+            document.getElementById('modalAdicionado').style.display = 'none';
         }
 
         function mostrarCarrinho() {
@@ -409,7 +429,6 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script>
-        // Animação de entrada para os produtos
         gsap.from(".product", {
             duration: 1,
             y: 50,
@@ -418,7 +437,6 @@
             ease: "power3.out"
         });
 
-        // Animação de gradiente mais suave e tecnológica para a barra
         gsap.to(".simulated-status-bar", {
             backgroundPosition: "200% 0",
             duration: 10,
