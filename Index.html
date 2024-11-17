@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponto da Arte</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+      .simulated-status-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(270deg, #001f3f, #002147, #003366, #004080, #00509e, #0066cc, #007fff, #00a1e0, #66d9ff, #00a1e0, #007fff, #00509e, #004080);
+    background-size: 1200% 1200%;
+    z-index: 1000;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+        header {
+            margin-top: 20px;
+            background: linear-gradient(to right, #002147, #00A1E0);
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        header h1 {
+            font-weight: bold;
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product {
+            border: 2px solid #00A1E0;
+            border-radius: 10px;
+            margin: 20px;
+            padding: 15px;
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product .descricao-link {
+            color: #007BFF;
+            cursor: pointer;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .product p.preco {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .product button {
+            background-color: #002147;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .product button:hover {
+            background-color: #00A1E0;
+        }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.7); /* Escurecido para maior contraste */
+    backdrop-filter: blur(5px); /* Adicionado efeito de desfoque */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Gradiente sutil para o fundo */
+    padding: 20px;
+    border: none;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    border-radius: 15px; /* Curvas mais suaves */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra para destacar o modal */
+    animation: fadeIn 0.3s ease; /* Suave entrada animada */
+}
+
+.modal-content h1, 
+.modal-content p {
+    color: #333; /* Texto em tom escuro para boa legibilidade */
+    font-family: 'Arial', sans-serif; /* Fonte moderna e limpa */
+    text-align: center;
+}
+
+.modal-content button {
+    background: #0066cc; /* Azul vibrante */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.modal-content button:hover {
+    background: #005bb5; /* Tom mais escuro no hover */
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #002147;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .product {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="simulated-status-bar"></div>
+
+    <header>
+        <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/logotipo%202.png" alt="Logotipo" class="logo">
+        <h1>Ponto da Arte</h1>
+    </header>
+
+    <main>
+        <section class="products" id="produtos">
+            <div class="product">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Anne%2016%2C99%20RS.jpg" alt="Linha Anne">
+                <h2>Linha Anne</h2>
+                <span class="descricao-link" onclick="mostrarDescricao('desc1')">Ver Descrição</span>
+                <p id="desc1" style="display:none;">Linha Anne é resistente e de ótima qualidade, perfeita para seus projetos.</p>
+                <p class="preco">R$ 16,99</p>
+                <button class="botao" onclick="adicionarAoCarrinho('Linha Anne', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Anne%2016%2C99%20RS.jpg')">Adicionar ao Carrinho</button>
+                <button class="botao" onclick="mostrarEndereco('Linha Anne')">Comprar</button>
+            </div>
+            <div class="product">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Charme%2016%2C99%20RS.jpg" alt="Linha Charme">
+                <h2>Linha Charme</h2>
+                <span class="descricao-link" onclick="mostrarDescricao('desc2')">Ver Descrição</span>
+                <p id="desc2" style="display:none;">Linha Charme oferece resistência e qualidade excepcional para suas criações.</p>
+                <p class="preco">R$ 16,99</p>
+                <button class="botao" onclick="adicionarAoCarrinho('Linha Charme', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Charme%2016%2C99%20RS.jpg')">Adicionar ao Carrinho</button>
+                <button class="botao" onclick="mostrarEndereco('Linha Charme')">Comprar</button>
+            </div>
+            <div class="product">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Duna%2014%2C99%20RS.jpg" alt="Linha Duna">
+                <h2>Linha Duna</h2>
+                <span class="descricao-link" onclick="mostrarDescricao('desc3')">Ver Descrição</span>
+                <p id="desc3" style="display:none;">Linha Duna é conhecida por sua resistência e qualidade superior.</p>
+                <p class="preco">R$ 14,99</p>
+                <button class="botao" onclick="adicionarAoCarrinho('Linha Duna', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Duna%2014%2C99%20RS.jpg')">Adicionar ao Carrinho</button>
+                <button class="botao" onclick="mostrarEndereco('Linha Duna')">Comprar</button>
+            </div>
+            <div class="product">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Harmony%2015%20RS.png" alt="Linha Harmony">
+                <h2>Linha Harmony</h2>
+                <span class="descricao-link" onclick="mostrarDescricao('desc4')">Ver Descrição</span>
+                <p id="desc4" style="display:none;">Linha Harmony combina resistência com qualidade superior, ideal para qualquer projeto.</p>
+                <p class="preco">R$ 15,00</p>
+                <button class="botao" onclick="adicionarAoCarrinho('Linha Harmony', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Harmony%2015%20RS.png')">Adicionar ao Carrinho</button>
+                <button class="botao" onclick="mostrarEndereco('Linha Harmony')">Comprar</button>
+            </div>
+            <div class="product">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Princesa%2014%2C99%20Promo%C3%A7%C3%A3o%20Imperdivel.jpg" alt="Linha Princesa">
+                <h2>Linha Princesa</h2>
+                <span class="descricao-link" onclick="mostrarDescricao('desc5')">Ver Descrição</span>
+                <p id="desc5" style="display:none;">Linha Princesa é resistente e de alta qualidade, com uma promoção imperdível.</p>
+                <p class="preco">R$ 14,99</p>
+                <button class="botao" onclick="adicionarAoCarrinho('Linha Princesa', 'https://raw.githubusercontent.com/StudyTask-ai/Produtos/refs/heads/main/Linha%20Princesa%2014%2C99%20Promo%C3%A7%C3%A3o%20Imperdivel.jpg')">Adicionar ao Carrinho</button>
+                <button class="botao" onclick="mostrarEndereco('Linha Princesa')">Comprar</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="modalEndereco" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalEndereco()">&times;</span>
+            <h2>Digite seu Endereço</h2>
+            <div class="form-group">
+                <label for="endereco">Endereço</label>
+                <input type="text" id="endereco" placeholder="Rua, Número, Bairro, Cidade">
+            </div>
+            <button class="botao-pagamento" onclick="calcularFrete()">Calcular Frete</button>
+        </div>
+    </div>
+
+    <div id="modalPagamento" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalPagamento()">&times;</span>
+            <h2>Pagamento</h2>
+            <div class="form-group">
+                <label for="cartao">Número do Cartão</label>
+                <input type="text" id="cartao" placeholder="0000 0000 0000 0000">
+            </div>
+            <div class="form-group">
+                <label for="validade">Validade</label>
+                <input type="text" id="validade" placeholder="MM/AA">
+            </div>
+            <div class="form-group">
+                <label for="codigo">Código de Segurança</label>
+                <input type="text" id="codigo" placeholder="123">
+            </div>
+            <button class="botao-pagamento" onclick="finalizarCompra()">Finalizar Compra</button>
+            <button class="botao-pagamento" onclick="mostrarPix()">Pagar com Pix</button>
+        </div>
+    </div>
+
+    <div id="modalPix" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalPix()">&times;</span>
+            <h2>Pagamento com Pix</h2>
+            <p>Escaneie o QR Code abaixo para pagar com Pix.</p>
+            <img src="https://via.placeholder.com/150" alt="QR Code">
+        </div>
+    </div>
+
+    <div id="modalCarrinho" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalCarrinho()">&times;</span>
+            <h2>Seu Carrinho</h2>
+            <ul id="listaCarrinho"></ul>
+        </div>
+    </div>
+
+    <div id="modalFrete" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalFrete()">&times;</span>
+            <h2>Frete Grátis</h2>
+            <p>Frete grátis para sua região!</p>
+            <button class="botao" onclick="fecharModalFrete()">OK</button>
+        </div>
+    </div>
+
+    <div id="modalCompraFinalizada" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalCompraFinalizada()">&times;</span>
+            <h2>Compra Finalizada</h2>
+            <p>Compra finalizada com sucesso!</p>
+            <button class="botao" onclick="fecharModalCompraFinalizada()">OK</button>
+        </div>
+    </div>
+
+    <footer>
+
+    </footer>
+
+    <script>
+        function mostrarDescricao(id) {
+            var desc = document.getElementById(id);
+            desc.style.display = desc.style.display === "none" ? "block" : "none";
+        }
+
+        function adicionarAoCarrinho(produto, imagemUrl) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            carrinho.push({ nome: produto, imagem: imagemUrl });
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            alert(produto + " foi adicionado ao carrinho.");
+        }
+
+        function mostrarCarrinho() {
+            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const listaCarrinho = document.getElementById('listaCarrinho');
+            listaCarrinho.innerHTML = carrinho.map(item => `
+                <li>
+                    <img src="${item.imagem}" alt="${item.nome}" style="width: 50px; height: auto; vertical-align: middle; margin-right: 10px;">
+                    ${item.nome}
+                </li>
+            `).join('');
+            document.getElementById('modalCarrinho').style.display = 'flex';
+        }
+
+        function fecharModalCarrinho() {
+            document.getElementById('modalCarrinho').style.display = 'none';
+        }
+
+        function mostrarEndereco(produto) {
+            document.getElementById('modalEndereco').style.display = 'flex';
+            sessionStorage.setItem('produtoSelecionado', produto);
+        }
+
+        function fecharModalEndereco() {
+            document.getElementById('modalEndereco').style.display = 'none';
+        }
+
+        function calcularFrete() {
+            fecharModalEndereco();
+            document.getElementById('modalFrete').style.display = 'flex';
+        }
+
+        function fecharModalFrete() {
+            document.getElementById('modalFrete').style.display = 'none';
+            mostrarPagamento();
+        }
+
+        function mostrarPagamento() {
+            document.getElementById('modalPagamento').style.display = 'flex';
+        }
+
+        function fecharModalPagamento() {
+            document.getElementById('modalPagamento').style.display = 'none';
+        }
+
+        function mostrarPix() {
+            fecharModalPagamento();
+            document.getElementById('modalPix').style.display = 'flex';
+        }
+
+        function fecharModalPix() {
+            document.getElementById('modalPix').style.display = 'none';
+        }
+
+        function finalizarCompra() {
+            fecharModalPagamento();
+            document.getElementById('modalCompraFinalizada').style.display = 'flex';
+        }
+
+        function fecharModalCompraFinalizada() {
+            document.getElementById('modalCompraFinalizada').style.display = 'none';
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script>
+        // Animação de entrada para os produtos
+        gsap.from(".product", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        // Animação de gradiente mais suave e tecnológica para a barra
+        gsap.to(".simulated-status-bar", {
+            backgroundPosition: "200% 0",
+            duration: 10,
+            ease: "linear",
+            repeat: -1
+        });
+    </script>
+</body>
+</html>
